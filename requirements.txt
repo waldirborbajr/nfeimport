@@ -1,0 +1,4 @@
+gunicorn==19.9.0
+mysql-connector-python==8.0.12
+protobuf==3.6.1
+six==1.11.0

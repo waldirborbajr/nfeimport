@@ -1,0 +1,6 @@
+__pycache__
+venv
+.DS_Store
+*.xml
+config.ini
+nfeimport.log
