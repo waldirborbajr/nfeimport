@@ -2,15 +2,10 @@
 Create a file called config.ini with the folowing content
 
 `[mysql]
-
 `#
-
 `# DEV
-
 `#
-
 `host = database.ip.address
-
 `database = database.password
 
 ## Virtual Environment
