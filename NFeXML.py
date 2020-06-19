@@ -3,7 +3,7 @@ import xml.dom.minidom as minidom
 """
 Dados da NFe
 """
-def extracNFeData(xml):
+def extractNFeData(xml):
     doc = minidom.parse(xml)
     node = doc.documentElement
     nfeData = []
@@ -257,7 +257,7 @@ def extracNFeData(xml):
 """
 Produtos da NFe (Detalhes)
 """
-def extracNFeDetail(xml):
+def extractNFeDetail(xml):
     doc = minidom.parse(xml)
     node = doc.documentElement
     nfeDetalhe = []

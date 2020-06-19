@@ -4,6 +4,7 @@
 '''
 NFeImport.py
 
+MM-DD-YYYY
 08-06-2018 : Ajuste no layout para o NFe 4.0
 08-10-2018 : Correcao para NF com apenas 01 item
 09-05-2018 : Ajuste para importar NFe
@@ -18,7 +19,7 @@ import logging
 import logging.config
 
 from NFeSQL import selectNFe, insertNFe
-from NFeXML import extracNFeData, extracNFeDetail
+from NFeXML import extractNFeData, extractNFeDetail
 
 def main():
   
@@ -26,8 +27,8 @@ def main():
   logger = logging.getLogger('NFeImport')
   
   if len(sys.argv) - 1 == 0:
-    print("Path nao informado.")
-    logger.error('Path nao informado.')
+    print("Path com os XMLs nao informado.")
+    logger.error('Path com os XMLs nao informado.')
     
     '''
     # log something
@@ -50,11 +51,11 @@ def main():
 
     logger.info("Processando: %s " , documentXML)
 
-    extracNFeDataResult = extracNFeData(documentXML)
-    extracNFeDetailResult = extracNFeDetail(documentXML)
+    extractNFeDataResult = extractNFeData(documentXML)
+    extractNFeDetailResult = extractNFeDetail(documentXML)
 
-    selectNFe(extracNFeDataResult)
-    insertNFe(extracNFeDataResult, extracNFeDetailResult)
+    selectNFe(extractNFeDataResult)
+    insertNFe(extractNFeDataResult, extractNFeDetailResult)
 
     src = documentXML
     dest = path+'done/'+xml
