@@ -100,10 +100,11 @@ def insertNFe(extracNFeDataResult, extracNFeDetailResult):
               queryInsert = """INSERT INTO nfedetalhe (  
                 nNF, det_cProd, det_cEAN, det_xProd, det_NCM, det_CEST, det_CFOP, det_uCom, det_qCom, det_vUnCom, 
                 det_vProd, det_cEANTrib, det_uTrib, det_qTrib, det_vUnTrib, det_indTot, det_xPed, det_ICMS_orig, 
-                det_ICMS_CST, det_ICMS_modBC, det_ICMS_vBC, det_ICMS_pICMS, det_ICMS_vICMS, det_IPI_qSelo, det_IPI_cEnq, 
+                det_ICMS_CST, det_ICMS_modBC, det_ICMS_vBC, det_ICMS_pICMS, det_ICMS_vICMS, det_ICMS_modBCST, det_ICMS_pMVAST,   det_ICMS_vBCST, det_ICMS_pICMSST, det_ICMS_vICMSST,
+                det_IPI_qSelo, det_IPI_cEnq, 
                 det_IPI_CST, det_IPI_vBC, det_IPI_pIPI, det_IPI_vIPI, det_PIS_CST, det_PIS_vBC, det_PIS_pPIS, det_PIS_vPIS, 
                 det_COFINS_CST, det_COFINS_vBC, det_COFINS_pCOFINS, det_COFINS_vCOFINS, det_infAdProd )
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
                 %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
 
               logger.info("Inserting nfedetalhe")

@@ -1,4 +1,6 @@
+import os
 import xml.dom.minidom as minidom
+
 
 """
 Dados da NFe
@@ -22,7 +24,7 @@ def extractNFeData(xml):
         if len(hasElement) != 0:
           nfeData.append(ide.getElementsByTagName("indPag")[0].childNodes[0].nodeValue)
         else:
-          nfeData.append("ZZZZZZZZZZ")
+          nfeData.append("indPag")
         #
             
         nfeData.append(ide.getElementsByTagName("mod")[0].childNodes[0].nodeValue)
@@ -336,6 +338,39 @@ def extractNFeDetail(xml):
                 else:
                   nfeDetalhe.append("..vICMS..")
                 #
+                # <28-10-2020>
+                #
+                hasElement = icms.getElementsByTagName("modBCST")
+                if len(hasElement) != 0:
+                  nfeDetalhe.append(icms.getElementsByTagName("modBCST")[0].childNodes[0].nodeValue)
+                else:
+                  nfeDetalhe.append("0")
+                #
+                hasElement = icms.getElementsByTagName("pMVAST")
+                if len(hasElement) != 0:
+                  nfeDetalhe.append(icms.getElementsByTagName("pMVAST")[0].childNodes[0].nodeValue)
+                else:
+                  nfeDetalhe.append("0.00")
+                #
+                hasElement = icms.getElementsByTagName("vBCST")
+                if len(hasElement) != 0:
+                  nfeDetalhe.append(icms.getElementsByTagName("vBCST")[0].childNodes[0].nodeValue)
+                else:
+                  nfeDetalhe.append("0.00")
+                #
+                hasElement = icms.getElementsByTagName("pICMSST")
+                if len(hasElement) != 0:
+                  nfeDetalhe.append(icms.getElementsByTagName("pICMSST")[0].childNodes[0].nodeValue)
+                else:
+                  nfeDetalhe.append("0.00")
+                #
+                hasElement = icms.getElementsByTagName("vICMSST")
+                if len(hasElement) != 0:
+                  nfeDetalhe.append(icms.getElementsByTagName("vICMSST")[0].childNodes[0].nodeValue)
+                else:
+                  nfeDetalhe.append("0.00")
+                #
+                # </28-10-2020>
 
         #
         # IPI
@@ -414,19 +449,19 @@ def extractNFeDetail(xml):
             if len(hasElement) != 0:
               nfeDetalhe.append(cofins.getElementsByTagName("vBC")[0].childNodes[0].nodeValue)
             else:
-              nfeDetalhe.append("..vBC..")
+              nfeDetalhe.append("0.00")
             #
             hasElement = cofins.getElementsByTagName("pCOFINS")
             if len(hasElement) != 0:
               nfeDetalhe.append(cofins.getElementsByTagName("pCOFINS")[0].childNodes[0].nodeValue)
             else:
-              nfeDetalhe.append("..pCOFINS..")
+              nfeDetalhe.append("0.00")
             #
             hasElement = cofins.getElementsByTagName("vCOFINS")
             if len(hasElement) != 0:
               nfeDetalhe.append(cofins.getElementsByTagName("vCOFINS")[0].childNodes[0].nodeValue)
             else:
-              nfeDetalhe.append("..vCOFINS..")
+              nfeDetalhe.append("0.00")
               
         #
         # Informação Adicional do Produto
@@ -435,7 +470,7 @@ def extractNFeDetail(xml):
         if len(hasElement) != 0:
           nfeDetalhe.append(det.getElementsByTagName("infAdProd")[0].childNodes[0].nodeValue)
         else:
-          nfeDetalhe.append("..infAdProd..")
+          nfeDetalhe.append("0.00")
 
         nfeDetalhes.append(nfeDetalhe)
         nfeDetalhe = []

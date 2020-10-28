@@ -1,7 +1,8 @@
 ## config.ini
+
 Create a file called config.ini with the folowing content
 
-```
+```bash
 [mysql]
 #
 # DEV

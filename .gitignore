@@ -4,3 +4,4 @@ venv
 *.xml
 config.ini
 nfeimport.log
+infra/

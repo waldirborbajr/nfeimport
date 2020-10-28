@@ -1,0 +1,53 @@
+version: "3.8"
+
+services:
+
+  database:
+    image: mariadb:latest
+    container_name: ct_database
+    hostname: ct_database
+    restart: always
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    environment:
+      MYSQL_ROOT_PASSWORD: 123mudar
+      # MYSQL_DATABASE: ICMS_DEV
+      # MYSQL_USER: nfeuser
+      # MYSQL_PASSWORD: 123mudar
+    volumes:
+      - $PWD/SQL_DDL/:/docker-entrypoint-initdb.d
+      - $PWD/infra/database/mysql:/var/lib/mysql:rw
+      - $PWD/infra/database/log:/var/log/mysql:rw
+    ports:
+      - 3306:3306
+    networks:
+      - infra
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+ 
+  nfeimport:
+    stdin_open: true
+    tty: true
+    build: 
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: ct_python
+    hostname: ct_python
+    volumes:
+      - $PWD/xml:/nfeimport/xml:rw
+      - $PWD/.:/nfeimport:rw
+    depends_on:
+      - database      
+    networks:
+      - infra
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+networks:
+  infra:
+#     driver: bridge

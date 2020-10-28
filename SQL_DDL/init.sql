@@ -1,8 +1,10 @@
 
-DROP USER nfeuser;
-CREATE USER 'nfeuser'@'%' IDENTIFIED BY '@senha';
-ALTER USER 'nfeuser'@'%' IDENTIFIED BY '@senha';
-GRANT ALL PRIVILEGES ON ICMS_NATAL_DEV.* TO 'nfeuser'@'%';
+-- DROP USER nfeuser;
+CREATE DATABASE ICMS_DEV;
+USE ICMS_DEV;
+CREATE USER 'nfeuser'@'%' IDENTIFIED BY '123mudar';
+ALTER USER 'nfeuser'@'%' IDENTIFIED BY '123mudar';
+GRANT ALL PRIVILEGES ON ICMS_DEV.* TO 'nfeuser'@'%';
 FLUSH PRIVILEGES;
 
 SET GLOBAL FOREIGN_KEY_CHECKS=0;
@@ -130,6 +132,11 @@ CREATE TABLE `nfedetalhe` (
   `det_ICMS_vBC` varchar(100) DEFAULT NULL COMMENT 'ICMS do Produto',
   `det_ICMS_pICMS` varchar(100) DEFAULT NULL COMMENT 'ICMS do Produto',
   `det_ICMS_vICMS` varchar(100) DEFAULT NULL COMMENT 'ICMS do Produto',
+  `det_ICMS_modBCST` varchar(100) DEFAULT NULL COMMENT 'ICMS do Produto',
+  `det_ICMS_pMVAST` varchar(100) DEFAULT NULL COMMENT 'ICMS do Produto',
+  `det_ICMS_vBCST` varchar(100) DEFAULT NULL COMMENT 'ICMS do Produto',
+  `det_ICMS_pICMSST` varchar(100) DEFAULT NULL COMMENT 'ICMS do Produto',
+  `det_ICMS_vICMSST` varchar(100) DEFAULT NULL COMMENT 'ICMS do Produto',
   `det_IPI_qSelo` varchar(100) DEFAULT NULL COMMENT 'IPI do Produto',
   `det_IPI_cEnq` varchar(100) DEFAULT NULL COMMENT 'IPI do Produto',
   `det_IPI_CST` varchar(100) DEFAULT NULL COMMENT 'IPI do Produto',
