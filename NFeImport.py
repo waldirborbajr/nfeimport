@@ -9,13 +9,18 @@ MM-DD-YYYY
 08-10-2018 : Correcao para NF com apenas 01 item
 09-05-2018 : Ajuste para importar NFe
 09-14-2018 : Ajuste para importar NFe antes da v4.0
-28-10-2020 : infAdProd para quando nao tem valor informar 0.00
-            adicionado 05 novos campos:
-              modBCST
-              pMVAST
-              vBCST
-              pICMSST
-              vICMSST
+28-10-2020 : 
+  infAdProd para quando nao tem valor informar 0.00
+  adicionado 05 novos campos:
+    modBCST
+    pMVAST
+    vBCST
+    pICMSST
+    vICMSST
+  NFeXML.py
+    Campos passaram a ser opcionais:
+      marca
+      nVol
 '''
 
 import os

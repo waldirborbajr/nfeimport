@@ -190,8 +190,23 @@ def extractNFeData(xml):
           nfeData.append("..qVol..")
         #
         
-        nfeData.append(transp.getElementsByTagName("marca")[0].childNodes[0].nodeValue)
-        nfeData.append(transp.getElementsByTagName("nVol")[0].childNodes[0].nodeValue)
+        # <28-10-2020>
+        hasElement = transp.getElementsByTagName("marca")
+        if len(hasElement) != 0:
+          nfeData.append(transp.getElementsByTagName("marca")[0].childNodes[0].nodeValue)
+        else:
+          nfeData.append("..marca..")
+        #
+        hasElement = transp.getElementsByTagName("nVol")
+        if len(hasElement) != 0:
+          nfeData.append(transp.getElementsByTagName("nVol")[0].childNodes[0].nodeValue)
+        else:
+          nfeData.append("..nVol..")
+        #
+        # </28-10-2020>
+
+        # nfeData.append(transp.getElementsByTagName("marca")[0].childNodes[0].nodeValue)
+        # nfeData.append(transp.getElementsByTagName("nVol")[0].childNodes[0].nodeValue)
 
     # 
     # Cobrança
