@@ -22,3 +22,10 @@ database = database.password
 
 6. pip freeze --local > requirements.txt
 7. pip install -r requirements.txt
+
+
+#### Docker
+
+```bash
+docker-compose up --force-recreate --build  && docker-compose down  --remove-orphans
+```
