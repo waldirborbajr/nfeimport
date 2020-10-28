@@ -37,7 +37,7 @@ services:
     hostname: ct_python
     volumes:
       - $PWD/xml:/nfeimport/xml:rw
-      - $PWD/.:/nfeimport:rw
+      # - $PWD/.:/nfeimport:rw
     depends_on:
       - database      
     networks:
