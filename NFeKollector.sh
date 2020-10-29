@@ -4,7 +4,5 @@
 # python NFeImport.py xml/ >> nfe.log
 # deactivate
 
-
-# while python NFeImport.py xml/ >> nfe.log; do sleep 300; done
-
-while :; do python NFeImport.py xml/ >> nfe.log; sleep 300; done
+# Executa de 30 em 30 minutos
+while :; do python NFeImport.py xml/ >> log/nfe.log; sleep 1800; done

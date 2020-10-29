@@ -21,6 +21,7 @@ MM-DD-YYYY
     Campos passaram a ser opcionais:
       marca
       nVol
+28-10-2020 : infCpl de 300 para 600 posicoes
 '''
 
 import os

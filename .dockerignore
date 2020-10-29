@@ -3,3 +3,5 @@ SQL_DDL/
 docker-compose.yaml
 Dockerfile
 __pycache__
+DEV/
+PROD/

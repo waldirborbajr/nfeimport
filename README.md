@@ -28,4 +28,17 @@ database = database.password
 
 ```bash
 docker-compose up --force-recreate --build  && docker-compose down  --remove-orphans
+
+```
+
+#### Docker Dev
+
+```bash
+docker-compose -f docker-compose-dev.yaml up --force-recreate --build && docker-compose -f docker-compose-dev.yaml   down --remove-orphans
+```
+
+#### Docker Prod
+
+```bash
+docker-compose -f docker-compose-prod.yaml up && docker-compose -f docker-compose-prod.yaml down --remove-orphans
 ```

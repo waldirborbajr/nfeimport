@@ -99,7 +99,7 @@ CREATE TABLE `nfe` (
   `detPag_indPag` varchar(100) DEFAULT NULL COMMENT 'Pagamento',
   `detPag_tPag` varchar(100) DEFAULT NULL COMMENT 'Pagamento',
   `detPag_vPag` varchar(100) DEFAULT NULL COMMENT 'Pagamento',
-  `infAdic_infCpl` varchar(300) DEFAULT NULL COMMENT 'Informacao Adicional',
+  `infAdic_infCpl` varchar(600) DEFAULT NULL COMMENT 'Informacao Adicional',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 

@@ -9,11 +9,12 @@ services:
     restart: always
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     environment:
-      MYSQL_ROOT_PASSWORD: 123mudar
-      # MYSQL_DATABASE: ICMS_DEV
-      # MYSQL_USER: nfeuser
-      # MYSQL_PASSWORD: 123mudar
+      - "MYSQL_ROOT_PASSWORD=123mudar"
+      # - "MYSQL_USER=nfeuser"
+      # - "MYSQL_PASSWORD=123mudar"
+      # - "MYSQL_DATABASE=ICMS_DEV"
     volumes:
+      # - "/usercode/db/init.sql:/docker-entrypoint-initdb.d/init.sql"
       - $PWD/SQL_DDL/:/docker-entrypoint-initdb.d
       - $PWD/infra/database/mysql:/var/lib/mysql:rw
       - $PWD/infra/database/log:/var/log/mysql:rw
@@ -32,12 +33,13 @@ services:
     tty: true
     build: 
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: ./DEV/Dockerfile
     container_name: ct_python
     hostname: ct_python
+    command: watch -n 120 python /nfeimport/NFeImport.py xml/
     volumes:
       - $PWD/xml:/nfeimport/xml:rw
-      # - $PWD/.:/nfeimport:rw
+      - $PWD/.:/nfeimport:rw
     depends_on:
       - database      
     networks:
@@ -50,4 +52,4 @@ services:
 
 networks:
   infra:
-#     driver: bridge
+    driver: bridge
