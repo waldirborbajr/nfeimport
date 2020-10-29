@@ -42,3 +42,7 @@ docker-compose -f docker-compose-dev.yaml up --force-recreate --build && docker-
 ```bash
 docker-compose -f docker-compose-prod.yaml up && docker-compose -f docker-compose-prod.yaml down --remove-orphans
 ```
+
+
+git branch -m main
+git checkout main
