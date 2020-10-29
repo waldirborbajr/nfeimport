@@ -71,3 +71,5 @@ git push origin --delete master
 
 git branch -a
 ```
+
+ref.: https://stevenmortimer.com/5-steps-to-change-github-default-branch-from-master-to-main/
