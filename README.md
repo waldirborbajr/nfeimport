@@ -46,3 +46,8 @@ docker-compose -f docker-compose-prod.yaml up && docker-compose -f docker-compos
 
 git branch -m main
 git checkout main
+
+
+git branch -m master main
+git push -u origin main
+
