@@ -2,14 +2,10 @@
 
 #### Docker
 
-```bash
-docker-compose up --force-recreate --build  && docker-compose down  --remove-orphans
-```
-
 #### Docker Dev
 
 ```bash
-COMPOSE_PROJECT_NAME=nfeimport docker-compose -f docker-compose-dev.yaml up --force-recreate --build && docker-compose -f docker-compose-dev.yaml   down --remove-orphans
+docker-compose up --force-recreate --build && docker-compose down --remove-orphans
 ```
 
 #### Docker Prod

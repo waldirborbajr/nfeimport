@@ -33,18 +33,18 @@ COPY requirements.txt /nfeimport/requirements.txt
 
 RUN pip install --no-cache-dir --user -r requirements.txt
 
-COPY . ./nfeimport
+COPY . .
 
 # 2nd Stage
 #
-FROM python:3.8-slim AS app
+FROM python:3.8-slim AS base
+
+WORKDIR /nfeimport
 
 # copy only the dependencies installation from the 1st stage image
 COPY --from=builder /root/.local /root/.local
-COPY --from=builder /nfeimport/. /nfeimport
+COPY --from=builder /nfeimport/. .
 COPY --from=builder /usr/bin/watch /usr/bin/watch
-
-# WORKDIR /nfeimport
 
 # update PATH environment variable
 ENV PATH=/root/.local/bin:$PATH

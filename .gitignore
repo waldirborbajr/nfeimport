@@ -5,3 +5,5 @@ venv
 config.ini
 nfeimport.log
 infra/
+# docker-compose.override.yaml
+.env

@@ -2,11 +2,19 @@ version: "3.8"
 
 services:
 
+  nfeimport:
+    stdin_open: true
+    tty: true
+    image: nfeimport
+
   database:
+    stdin_open: true
+    tty: true
     image: mariadb:latest
     container_name: ct_database
     hostname: ct_database
-    restart: always
+    restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
+    stop_grace_period: "${DOCKER_STOP_GRACE_PERIOD:-3s}"
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     environment:
       - "MYSQL_ROOT_PASSWORD=123mudar"
@@ -27,30 +35,4 @@ services:
       options:
         max-size: "10m"
         max-file: "5"
- 
-  nfeimport:
-    stdin_open: true
-    tty: true
-    build: 
-      context: .
-      dockerfile: ./dockerfile/Dockerfile
-    container_name: ct_python
-    hostname: ct_python
-    image: nfeimport
-    command: watch -n 120 python /nfeimport/NFeImport.py xml/
-    volumes:
-      - $PWD/xml:/nfeimport/xml:rw
-      - $PWD/.:/nfeimport:rw
-    depends_on:
-      - database      
-    networks:
-      - infra
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "5"
-
-networks:
-  infra:
-    driver: bridge
+   
