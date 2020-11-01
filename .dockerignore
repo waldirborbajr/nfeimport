@@ -5,3 +5,8 @@ Dockerfile
 __pycache__
 DEV/
 PROD/
+*.xlsx
+*.png
+venv
+.venv
+.git

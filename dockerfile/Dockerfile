@@ -1,0 +1,51 @@
+# 1st Stage
+#
+FROM python:3.8 AS builder 
+
+MAINTAINER Waldir Borba Junior <wborbajr@gmail.com>
+
+ENV PYTHONFAULTHANDLER=1 \
+    PYTHONHASHSEED=random \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+ENV PIP_DEFAULT_TIMEOUT=100 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PIP_NO_CACHE_DIR=1 \
+    TZ=America/Sao_Paulo
+
+ENV export DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get -y update \
+    && apt-get -y install watch nano locales \    
+    && sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
+    && dpkg-reconfigure --frontend=noninteractive locales \
+    && update-locale LANG=en_US.UTF-8 \
+    && rm -f /etc/localtime \
+    && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
+    && dpkg-reconfigure -f noninteractive tzdata \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /nfeimport
+
+COPY requirements.txt /nfeimport/requirements.txt
+
+RUN pip install --no-cache-dir --user -r requirements.txt
+
+COPY . ./nfeimport
+
+# 2nd Stage
+#
+FROM python:3.8-slim AS app
+
+# copy only the dependencies installation from the 1st stage image
+COPY --from=builder /root/.local /root/.local
+COPY --from=builder /nfeimport/. /nfeimport
+COPY --from=builder /usr/bin/watch /usr/bin/watch
+
+# WORKDIR /nfeimport
+
+# update PATH environment variable
+ENV PATH=/root/.local/bin:$PATH
+

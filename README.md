@@ -1,40 +1,15 @@
-## config.ini
-
-Create a file called config.ini with the folowing content
-
-```bash
-[mysql]
-#
-# DEV
-#
-host = database.ip.address
-database = database.password
-```
-
-## Virtual Environment
-
-1. easy_install pip
-2. pip install virtualenv
-
-3. virtualenv --python=python3 venv // python3 -m venv venv/
-4. source venv/bin/activate
-5. deactivate
-
-6. pip freeze --local > requirements.txt
-7. pip install -r requirements.txt
-
+## NFeImport 4.0.1
 
 #### Docker
 
 ```bash
 docker-compose up --force-recreate --build  && docker-compose down  --remove-orphans
-
 ```
 
 #### Docker Dev
 
 ```bash
-docker-compose -f docker-compose-dev.yaml up --force-recreate --build && docker-compose -f docker-compose-dev.yaml   down --remove-orphans
+COMPOSE_PROJECT_NAME=nfeimport docker-compose -f docker-compose-dev.yaml up --force-recreate --build && docker-compose -f docker-compose-dev.yaml   down --remove-orphans
 ```
 
 #### Docker Prod
@@ -43,6 +18,12 @@ docker-compose -f docker-compose-dev.yaml up --force-recreate --build && docker-
 docker-compose -f docker-compose-prod.yaml up && docker-compose -f docker-compose-prod.yaml down --remove-orphans
 ```
 
+#### WARNING 
+
+```bash
+docker system prune -a
+docker volume rm $(docker volume ls -f dangling=true -q)
+```
 
 ### From Master to Main
 

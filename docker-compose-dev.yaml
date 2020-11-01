@@ -33,9 +33,10 @@ services:
     tty: true
     build: 
       context: .
-      dockerfile: ./DEV/Dockerfile
+      dockerfile: ./dockerfile/Dockerfile
     container_name: ct_python
     hostname: ct_python
+    image: nfeimport
     command: watch -n 120 python /nfeimport/NFeImport.py xml/
     volumes:
       - $PWD/xml:/nfeimport/xml:rw
