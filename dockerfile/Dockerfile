@@ -1,23 +1,28 @@
 # 1st Stage
 #
-FROM python:3.8 AS builder 
+FROM python:3.8-slim AS builder 
 
 MAINTAINER Waldir Borba Junior <wborbajr@gmail.com>
 
-ENV PYTHONFAULTHANDLER=1 \
-    PYTHONHASHSEED=random \
-    PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
+# Always set a working directory
+WORKDIR /nfeimport
 
-ENV PIP_DEFAULT_TIMEOUT=100 \
-    PIP_DISABLE_PIP_VERSION_CHECK=1 \
-    PIP_NO_CACHE_DIR=1 \
-    TZ=America/Sao_Paulo
+# Sets utf-8 encoding for Python et al
+ENV LANG=C.UTF-8
+# Turns off writing .pyc files; superfluous on an ephemeral container.
+ENV PYTHONDONTWRITEBYTECODE=1
+# Seems to speed things up
+ENV PYTHONUNBUFFERED=1
 
-ENV export DEBIAN_FRONTEND=noninteractive
+ENV TZ=America/Sao_Paulo
+
+# Ensures that the python and pip executables used
+# in the image will be those from our virtualenv.
+ENV PATH="/venv/bin:$PATH"
 
 RUN apt-get -y update \
-    && apt-get install -y --no-install-recommends watch nano locales \    
+    && apt-get install -y --no-install-recommends \
+    watch nano locales gettext build-essential \
     && sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
     && dpkg-reconfigure --frontend=noninteractive locales \
     && update-locale LANG=en_US.UTF-8 \
@@ -27,24 +32,30 @@ RUN apt-get -y update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Setup the virtualenv
+RUN python -m venv /venv
+
+# Install Python deps
 COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-RUN pip install --no-cache-dir --user -r requirements.txt
-
-WORKDIR /nfeimport
-
-COPY . .
+# COPY . .
 
 # 2nd Stage
 #
 FROM python:3.8-slim AS base
 
 # update PATH environment variable
-ENV PATH=/root/.local/bin:$PATH
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV PIP_DISABLE_PIP_VERSION_CHECK=1
+ENV PATH="/venv/bin:$PATH"
 
 WORKDIR /nfeimport
 
 # copy only the dependencies installation from the 1st stage image
-COPY --from=builder /root/.local /root/.local
+# copy in Python environment
+COPY --from=builder /venv /venv
 COPY --from=builder /usr/bin/watch /usr/bin/watch
-COPY --from=builder /nfeimport/. .
+COPY . .
+# COPY --from=builder /nfeimport/. .
