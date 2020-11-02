@@ -22,7 +22,7 @@ ENV PATH="/venv/bin:$PATH"
 
 RUN apt-get -y update \
     && apt-get install -y --no-install-recommends \
-    watch nano locales gettext build-essential \
+    watch nano locales gettext build-essential htop \
     && sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
     && dpkg-reconfigure --frontend=noninteractive locales \
     && update-locale LANG=en_US.UTF-8 \
@@ -57,5 +57,8 @@ WORKDIR /nfeimport
 # copy in Python environment
 COPY --from=builder /venv /venv
 COPY --from=builder /usr/bin/watch /usr/bin/watch
+COPY --from=builder /usr/bin/htop /usr/bin/htop
 COPY . .
 # COPY --from=builder /nfeimport/. .
+
+# CMD ["/nfeimport/NFeRun.sh"]
