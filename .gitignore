@@ -2,7 +2,7 @@ __pycache__
 venv
 .DS_Store
 *.xml
-config.ini
+# config.ini
 nfeimport.log
 infra/
 # docker-compose.override.yaml

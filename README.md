@@ -14,11 +14,26 @@ docker-compose up --force-recreate --build && docker-compose down --remove-orpha
 docker-compose -f docker-compose-prod.yaml up && docker-compose -f docker-compose-prod.yaml down --remove-orphans
 ```
 
-#### WARNING 
+## WARNING 
+
+#### BEWARE
 
 ```bash
+docker container prune
+docker network prune
+docker image prune
+
 docker system prune -a
-docker volume rm $(docker volume ls -f dangling=true -q)
+docker image rm $(docker images --format "{{.ID}}" --filter "dangling=true")
+
+Images
+docker rmi $(docker images -a -q)
+docker images -f dangling=true
+docker images purge
+
+Volumes
+docker volume ls -f dangling=true
+docker volume prune
 ```
 
 ### From Master to Main

@@ -1,6 +1,6 @@
 # 1st Stage
 #
-FROM python:3.8-slim AS builder 
+FROM python:3.8 AS builder 
 
 MAINTAINER Waldir Borba Junior <wborbajr@gmail.com>
 
@@ -39,8 +39,6 @@ RUN python -m venv /venv
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# COPY . .
-
 # 2nd Stage
 #
 FROM python:3.8-slim AS base
@@ -55,10 +53,10 @@ WORKDIR /nfeimport
 
 # copy only the dependencies installation from the 1st stage image
 # copy in Python environment
+COPY . .
 COPY --from=builder /venv /venv
 COPY --from=builder /usr/bin/watch /usr/bin/watch
+COPY --from=builder /etc/localtime /etc/localtime
+COPY --from=builder /etc/locale.gen /etc/locale.gen
+### Comment below for production
 COPY --from=builder /usr/bin/htop /usr/bin/htop
-COPY . .
-# COPY --from=builder /nfeimport/. .
-
-# CMD ["/nfeimport/NFeRun.sh"]
