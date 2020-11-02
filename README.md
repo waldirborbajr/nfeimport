@@ -8,10 +8,18 @@
 docker-compose up --force-recreate --build && docker-compose down --remove-orphans
 ```
 
+```bash
+docker run -it nfeimport:latest /bin/bash
+```
+
 #### Docker Prod
 
 ```bash
-docker-compose -f docker-compose-prod.yaml up && docker-compose -f docker-compose-prod.yaml down --remove-orphans
+docker-compose -f docker-compose.prod.yaml up && docker-compose -f docker-compose.prod.yaml down --remove-orphans
+```
+
+```bash
+docker-compose -f docker-compose.prod.yaml up --force-recreate --build && docker-compose -f docker-compose.prod.yaml down --remove-orphans
 ```
 
 ## WARNING 
