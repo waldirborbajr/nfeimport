@@ -11,13 +11,18 @@ services:
     build: 
       context: .
       dockerfile: dockerfile/Dockerfile
-      target: base
+      # target: base
     # command: watch -n 60 python /nfeimport/NFeDownloadXML.py && watch -n 145 python /nfeimport/NFeImport.py xml/
     volumes:
       - $PWD/xml:/nfeimport/xml:rw
+    networks:
+      - infra
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "5"
  
+networks:
+  infra:
+    driver: bridge
