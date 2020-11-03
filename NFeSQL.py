@@ -12,7 +12,7 @@ def selectNFe(extracNFeDataResult):
   logger = logging.getLogger("NFeImport.NFeSQL.selectNFe")
   logger.info("SELECTING nfe %s", nfeNumber)
     
-  select_stmt = """ SELECT * FROM nfe WHERE ide_nNF = %s """ 
+  select_stmt = """ SELECT 1 FROM nfe WHERE ide_nNF = %s LIMIT 1""" 
 
   db_config = read_db_config()
   conn_select = MySQLConnection(**db_config)

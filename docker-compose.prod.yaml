@@ -12,7 +12,7 @@ services:
       context: .
       dockerfile: dockerfile/Dockerfile
       target: base
-    command: watch -n 60 python /nfeimport/NFeDownloadXML.py && watch -n 145 python /nfeimport/NFeImport.py xml/
+    # command: watch -n 60 python /nfeimport/NFeDownloadXML.py && watch -n 145 python /nfeimport/NFeImport.py xml/
     volumes:
       - $PWD/xml:/nfeimport/xml:rw
     logging:
