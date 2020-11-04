@@ -22,7 +22,7 @@ ENV PATH="/venv/bin:$PATH"
 
 RUN apt-get -y update \
     && apt-get install -y --no-install-recommends \
-    watch nano locales gettext build-essential htop \
+    watch nano locales gettext build-essential htop cron \
     && sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
     && dpkg-reconfigure --frontend=noninteractive locales \
     && update-locale LANG=en_US.UTF-8 \
@@ -37,6 +37,7 @@ RUN python -m venv /venv
 
 # Install Python deps
 COPY requirements.txt .
+RUN /venv/bin/python -m pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
 # 2nd Stage
@@ -55,7 +56,9 @@ WORKDIR /nfeimport
 # copy in Python environment
 COPY . .
 COPY --from=builder /venv /venv
-COPY --from=builder /usr/bin/watch /usr/bin/watch
+# COPY --from=builder /usr/bin/watch /usr/bin/watch
+COPY --from=builder /var/spool/cron /var/spool/cron
+COPY --from=builder /usr/bin/crontab /usr/bin/crontab
 COPY --from=builder /etc/localtime /etc/localtime
 COPY --from=builder /etc/locale.gen /etc/locale.gen
 # 
