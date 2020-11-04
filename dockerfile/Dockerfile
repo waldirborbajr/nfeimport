@@ -64,5 +64,7 @@ COPY --from=builder /etc/locale.gen /etc/locale.gen
 # 
 COPY cronfile /root/cronfile
 RUN crontab /root/cronfile
+#
+RUN mkdir processed
 ### Comment below for production
 COPY --from=builder /usr/bin/htop /usr/bin/htop

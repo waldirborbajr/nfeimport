@@ -72,7 +72,7 @@ def main():
     insertNFe(extractNFeDataResult, extractNFeDetailResult)
 
     src = documentXML
-    dest = path+'done/'+xml
+    dest = 'processed'
 
     # move file after processed
     shutil.move(src, dest)  
