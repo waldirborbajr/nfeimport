@@ -58,5 +58,8 @@ COPY --from=builder /venv /venv
 COPY --from=builder /usr/bin/watch /usr/bin/watch
 COPY --from=builder /etc/localtime /etc/localtime
 COPY --from=builder /etc/locale.gen /etc/locale.gen
+# 
+COPY cronfile /root/cronfile
+RUN crontab /root/cronfile
 ### Comment below for production
 COPY --from=builder /usr/bin/htop /usr/bin/htop

@@ -1,0 +1,5 @@
+# Executa a cada 30 min 
+*/30 * * * * /venv/bin/python /nfeimport/NFeDownloadXML.py
+
+# Executa a cada 1h e 15min
+*/15 */1 * * * /venv/bin/python  /nfeimport/NFeImport.py
