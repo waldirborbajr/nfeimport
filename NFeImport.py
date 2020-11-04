@@ -75,8 +75,17 @@ def main():
     dest = 'processed'
 
     # move file after processed
-    shutil.move(src, dest)  
+    shutil.move(src, dest)
 
+  # Remove all PDFs files
+  pdf_files = [x for x in os.listdir(path) if (x.startswith("SY3_X")) and (x.endswith(".pdf"))]
+
+  for pdf in pdf_files:
+    documentPDF = path+pdf
+
+    # Delete all PDF files
+    os.remove(documentPDF)
+    
 #
 # Main module
 #
