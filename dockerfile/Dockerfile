@@ -2,12 +2,15 @@
 #
 FROM python:3.8 AS builder 
 
-MAINTAINER Waldir Borba Junior <wborbajr@gmail.com>
+# labeling
+LABEL maintainer="Waldir Borba Junior <wborbajr@gmail.com>" \
+      version="V0.0.1.0" \
+      description="Docker Application | nfeimport:latest"
 
 # Always set a working directory
 WORKDIR /nfeimport
 
-# Sets utf-8 encoding for Python et al
+# Sets utf-8 encoding for Python
 ENV LANG=C.UTF-8
 # Turns off writing .pyc files; superfluous on an ephemeral container.
 ENV PYTHONDONTWRITEBYTECODE=1
