@@ -1,27 +1,23 @@
 # 1st Stage
 #
-FROM python:3.8 AS builder 
+FROM python:3.8-slim AS base
 
-# labeling
 LABEL maintainer="Waldir Borba Junior <wborbajr@gmail.com>" \
       version="V0.0.1.0" \
       description="Docker Application | nfeimport:latest"
 
-# Always set a working directory
+ENV LANG=C.UTF-8
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV PIP_DISABLE_PIP_VERSION_CHECK=1
+ENV TZ=America/Sao_Paulo
+ENV PATH="/venv/bin:$PATH"
+
 WORKDIR /nfeimport
 
-# Sets utf-8 encoding for Python
-ENV LANG=C.UTF-8
-# Turns off writing .pyc files; superfluous on an ephemeral container.
-ENV PYTHONDONTWRITEBYTECODE=1
-# Seems to speed things up
-ENV PYTHONUNBUFFERED=1
-
-ENV TZ=America/Sao_Paulo
-
-# Ensures that the python and pip executables used
-# in the image will be those from our virtualenv.
-ENV PATH="/venv/bin:$PATH"
+# 2nd Stage
+#
+FROM base AS build
 
 RUN apt-get -y update \
     && apt-get install -y --no-install-recommends \
@@ -40,34 +36,25 @@ RUN python -m venv /venv
 
 # Install Python deps
 COPY requirements.txt .
-RUN /venv/bin/python -m pip install --upgrade pip
+RUN /venv/bin/python -m pip install pip --upgrade
+RUN /venv/bin/python -m pip install wheel --upgrade
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 2nd Stage
+# 3rd Stage
 #
-FROM python:3.8-slim AS base
+FROM base AS final
 
-# update PATH environment variable
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-ENV PIP_DISABLE_PIP_VERSION_CHECK=1
-ENV PATH="/venv/bin:$PATH"
-
-WORKDIR /nfeimport
-
-# copy only the dependencies installation from the 1st stage image
-# copy in Python environment
 COPY . .
-COPY --from=builder /venv /venv
+COPY --from=build /venv /venv
 # COPY --from=builder /usr/bin/watch /usr/bin/watch
-COPY --from=builder /var/spool/cron /var/spool/cron
-COPY --from=builder /usr/bin/crontab /usr/bin/crontab
-COPY --from=builder /etc/localtime /etc/localtime
-COPY --from=builder /etc/locale.gen /etc/locale.gen
+COPY --from=build /var/spool/cron /var/spool/cron
+COPY --from=build /usr/bin/crontab /usr/bin/crontab
+COPY --from=build /etc/localtime /etc/localtime
+COPY --from=build /etc/locale.gen /etc/locale.gen
 # 
 COPY cronfile /root/cronfile
 RUN crontab /root/cronfile
 #
 RUN mkdir processed
 ### Comment below for production
-COPY --from=builder /usr/bin/htop /usr/bin/htop
+COPY --from=build /usr/bin/htop /usr/bin/htop

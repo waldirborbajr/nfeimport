@@ -12,3 +12,5 @@ venv
 .git
 nohup.out
 processed/
+pyproject.toml
+poetry.lock
