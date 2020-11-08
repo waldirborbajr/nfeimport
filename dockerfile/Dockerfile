@@ -26,25 +26,23 @@ RUN apk add --update --no-cache \
   apk-cron \
   bash \
   && cp /usr/share/zoneinfo/${TZ} /etc/localtime \
-  && echo "${TZ}" > /etc/timezone \
-  # Cleaning up
-  && apk del tzdata  \
-  && rm -rf /usr/share/zoneinfo/Africa \
-  && rm -rf /usr/share/zoneinfo/Antarctica  \
-  && rm -rf /usr/share/zoneinfo/Arctic  \
-  && rm -rf /usr/share/zoneinfo/Asia  \
-  && rm -rf /usr/share/zoneinfo/Atlantic  \
-  && rm -rf /usr/share/zoneinfo/Australia  \
-  && rm -rf /usr/share/zoneinfo/Europe   \
-  && rm -rf /usr/share/zoneinfo/Indian  \
-  && rm -rf /usr/share/zoneinfo/Mexico  \
-  && rm -rf /usr/share/zoneinfo/Pacific  \
-  && rm -rf /usr/share/zoneinfo/Chile  \
-  && rm -rf /usr/share/zoneinfo/Canada \   
-  && rm -rf /var/cache/apk/* \
-  && rm -rf /tmp/*
-
-  RUN ls /usr/share/zoneinfo/
+  && echo "${TZ}" > /etc/timezone 
+#   # Cleaning up
+#   && apk del tzdata  \
+#   && rm -rf /usr/share/zoneinfo/Africa \
+#   && rm -rf /usr/share/zoneinfo/Antarctica  \
+#   && rm -rf /usr/share/zoneinfo/Arctic  \
+#   && rm -rf /usr/share/zoneinfo/Asia  \
+#   && rm -rf /usr/share/zoneinfo/Atlantic  \
+#   && rm -rf /usr/share/zoneinfo/Australia  \
+#   && rm -rf /usr/share/zoneinfo/Europe   \
+#   && rm -rf /usr/share/zoneinfo/Indian  \
+#   && rm -rf /usr/share/zoneinfo/Mexico  \
+#   && rm -rf /usr/share/zoneinfo/Pacific  \
+#   && rm -rf /usr/share/zoneinfo/Chile  \
+#   && rm -rf /usr/share/zoneinfo/Canada \   
+#   && rm -rf /var/cache/apk/* \
+#   && rm -rf /tmp/*
 
 # Setup the virtualenv
 RUN python -m venv /venv
