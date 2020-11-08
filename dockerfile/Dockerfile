@@ -44,6 +44,8 @@ RUN apk add --update --no-cache \
   && rm -rf /var/cache/apk/* \
   && rm -rf /tmp/*
 
+  RUN ls /usr/share/zoneinfo/
+
 # Setup the virtualenv
 RUN python -m venv /venv
 
