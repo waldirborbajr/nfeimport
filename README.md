@@ -9,7 +9,7 @@ docker-compose up --force-recreate --build && docker-compose down --remove-orpha
 ```
 
 ```bash
-docker run -it nfeimport:latest /bin/bash
+docker run -dit --restart always nfeimport /bin/bash
 ```
 
 #### Docker Prod

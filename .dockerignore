@@ -14,3 +14,8 @@ nohup.out
 processed/
 pyproject.toml
 poetry.lock
+*.pyc
+*.pyo
+*.pyd
+.Python
+env

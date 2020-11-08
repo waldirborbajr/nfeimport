@@ -58,3 +58,5 @@ RUN crontab /root/cronfile
 RUN mkdir processed
 ### Comment below for production
 COPY --from=build /usr/bin/htop /usr/bin/htop
+
+ENTRYPOINT ["python"]
