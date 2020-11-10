@@ -25,7 +25,8 @@ def main():
             # raise
 
         imapSession.select(readonly=False) # so we can mark mails as read
-        typ, data = imapSession.search(None, 'ALL')
+        # typ, data = imapSession.search(None, 'ALL')
+        typ, data = imapSession.search(None, 'INBOX', '(UNSEEN)')
         if typ != 'OK':
             print('Error searching Inbox.')
             # raise
