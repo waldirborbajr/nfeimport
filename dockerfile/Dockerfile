@@ -1,4 +1,6 @@
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 1st Stage
+# Environment Image
 #
 FROM python:3.8-alpine AS base
 
@@ -16,7 +18,9 @@ ENV PATH="/opt/venv/bin:$PATH"
 
 WORKDIR /nfeimport
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 2nd Stage
+# Compilation Image
 #
 FROM base AS build
 
@@ -53,7 +57,9 @@ RUN /opt/venv/bin/python -m pip install pip --upgrade
 RUN /opt/venv/bin/python -m pip install wheel --upgrade
 RUN pip install --no-cache-dir -r requirements.txt
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 3rd Stage
+# Runtime Image
 #
 FROM base AS final
 
