@@ -12,7 +12,7 @@ ENV PIP_DISABLE_PIP_VERSION_CHECK=1
 ENV LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8
 ENV TZ America/Sao_Paulo
-ENV PATH="/venv/bin:$PATH"
+ENV PATH="/opt/venv/bin:$PATH"
 
 WORKDIR /nfeimport
 
@@ -45,12 +45,12 @@ RUN apk add --update --no-cache \
 #   && rm -rf /tmp/*
 
 # Setup the virtualenv
-RUN python -m venv /venv
+RUN python -m venv /opt/venv
 
 # Install Python deps
 COPY requirements.txt .
-RUN /venv/bin/python -m pip install pip --upgrade
-RUN /venv/bin/python -m pip install wheel --upgrade
+RUN /opt/venv/bin/python -m pip install pip --upgrade
+RUN /opt/venv/bin/python -m pip install wheel --upgrade
 RUN pip install --no-cache-dir -r requirements.txt
 
 # 3rd Stage
@@ -60,7 +60,7 @@ FROM base AS final
 # Copy project files
 COPY . .
 # Copy files from build stage
-COPY --from=build /venv /venv
+COPY --from=build /opt/venv /opt/venv
 COPY --from=build /bin/bash /bin/bash
 COPY --from=build /var/spool/cron /var/spool/cron
 COPY --from=build /usr/bin/crontab /usr/bin/crontab
