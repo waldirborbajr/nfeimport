@@ -74,7 +74,17 @@ def main():
     src = documentXML
     dest = 'processed'
 
+    dst_file = os.path.join(dest, xml)
     # move file after processed
+    if os.path.exists(dst_file):
+
+      try:
+        os.remove(dst_file)
+      except PermissionError as exc:
+        os.chmod(dst_file, stat.S_IWUSR)
+        os.remove(dst_file)
+
+    # shutil.copy(src_file, dst_dir)
     shutil.move(src, dest)
 
   # Remove all PDFs files

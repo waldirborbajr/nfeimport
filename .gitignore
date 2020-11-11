@@ -8,3 +8,4 @@ infra/
 # docker-compose.override.yaml
 .env
 nohup.out
+!xml/.gitinclude
