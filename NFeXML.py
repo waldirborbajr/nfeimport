@@ -1,5 +1,17 @@
 import os
 import xml.dom.minidom as minidom
+import re
+
+def extractOSNumber(xPed):
+  regex = r"([0-9]+)\/"
+
+  matches = re.finditer(regex, xPed, re.MULTILINE)
+
+  for matchNum, match in enumerate(matches, start=1):    
+    for groupNum in range(0, len(match.groups())):
+      groupNum = groupNum + 1
+        
+      return match.group(groupNum)
 
 
 """
@@ -317,7 +329,9 @@ def extractNFeDetail(xml):
             nfeDetalhe.append(prod.getElementsByTagName("qTrib")[0].childNodes[0].nodeValue)
             nfeDetalhe.append(prod.getElementsByTagName("vUnTrib")[0].childNodes[0].nodeValue)
             nfeDetalhe.append(prod.getElementsByTagName("indTot")[0].childNodes[0].nodeValue)
-            nfeDetalhe.append(prod.getElementsByTagName("xPed")[0].childNodes[0].nodeValue)
+            # nfeDetalhe.append(prod.getElementsByTagName("xPed")[0].childNodes[0].nodeValue)
+            osnum = extractOSNumber(prod.getElementsByTagName("xPed")[0].childNodes[0].nodeValue)
+            nfeDetalhe.append(osnum)
 
         #
         # Imposto ICMS
@@ -339,19 +353,19 @@ def extractNFeDetail(xml):
                 if len(hasElement) != 0:
                   nfeDetalhe.append(icms.getElementsByTagName("vBC")[0].childNodes[0].nodeValue)
                 else:
-                  nfeDetalhe.append("..vBC..")
+                  nfeDetalhe.append("0.00")
                 #
                 hasElement = icms.getElementsByTagName("pICMS")
                 if len(hasElement) != 0:
                   nfeDetalhe.append(icms.getElementsByTagName("pICMS")[0].childNodes[0].nodeValue)
                 else:
-                  nfeDetalhe.append("..pICMS..")
+                  nfeDetalhe.append("0.00")
                 #
                 hasElement = icms.getElementsByTagName("vICMS")
                 if len(hasElement) != 0:
                   nfeDetalhe.append(icms.getElementsByTagName("vICMS")[0].childNodes[0].nodeValue)
                 else:
-                  nfeDetalhe.append("..vICMS..")
+                  nfeDetalhe.append("0.00")
                 #
                 # <28-10-2020>
                 #
@@ -398,7 +412,7 @@ def extractNFeDetail(xml):
               if len(hasElement) != 0:
                 nfeDetalhe.append(ipi.getElementsByTagName("qSelo")[0].childNodes[0].nodeValue)
               else:
-                nfeDetalhe.append("..qSelo..")
+                nfeDetalhe.append("0.00")
               #             
               nfeDetalhe.append(ipi.getElementsByTagName("cEnq")[0].childNodes[0].nodeValue)
               nfeDetalhe.append(ipi.getElementsByTagName("CST")[0].childNodes[0].nodeValue)
@@ -408,19 +422,19 @@ def extractNFeDetail(xml):
               if len(hasElement) != 0:
                 nfeDetalhe.append(ipi.getElementsByTagName("vBC")[0].childNodes[0].nodeValue)
               else:
-                nfeDetalhe.append("..vBC..")
+                nfeDetalhe.append("0.00")
               #
               hasElement = ipi.getElementsByTagName("pIPI")
               if len(hasElement) != 0:
                 nfeDetalhe.append(ipi.getElementsByTagName("pIPI")[0].childNodes[0].nodeValue)
               else:
-                nfeDetalhe.append("..pIPI..")
+                nfeDetalhe.append("0.00")
               #
               hasElement = ipi.getElementsByTagName("vIPI")
               if len(hasElement) != 0:
                 nfeDetalhe.append(ipi.getElementsByTagName("vIPI")[0].childNodes[0].nodeValue)
               else:
-                nfeDetalhe.append("..vIPI..")
+                nfeDetalhe.append("0.00")
               #
 
         #
@@ -443,13 +457,13 @@ def extractNFeDetail(xml):
               if len(hasElement) != 0:
                 nfeDetalhe.append(pis.getElementsByTagName("pPIS")[0].childNodes[0].nodeValue)
               else:
-                nfeDetalhe.append("..pPIS..")
+                nfeDetalhe.append("0.00")
               #
               hasElement = pis.getElementsByTagName("vPIS")
               if len(hasElement) != 0:
                 nfeDetalhe.append(pis.getElementsByTagName("vPIS")[0].childNodes[0].nodeValue)
               else:
-                nfeDetalhe.append("..vPIS..")
+                nfeDetalhe.append("0.00")
                 
         #
         # COFINS
