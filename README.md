@@ -22,6 +22,11 @@ docker-compose -f docker-compose.prod.yaml up && docker-compose -f docker-compos
 docker-compose -f docker-compose.prod.yaml up --force-recreate --build && docker-compose -f docker-compose.prod.yaml down --remove-orphans
 ```
 
+```bash
+docker exec -it ct_python /bin/bash
+```
+
+
 ## WARNING 
 
 #### BEWARE
