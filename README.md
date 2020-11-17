@@ -25,6 +25,7 @@ docker-compose -f docker-compose.prod.yaml up --force-recreate --build && docker
 ```bash
 docker-compose -f docker-compose.prod.yaml up -d
 docker exec -it ct_python /bin/bash
+docker-compose logs -f -t
 ```
 
 
