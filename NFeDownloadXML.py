@@ -9,65 +9,60 @@ import sys
 
 import dnlconfig as cfg
 
-# detach_dir = '.'
-# if 'nfe' not in os.listdir(detach_dir):
-#     os.mkdir('nfe')
-
 userName = cfg.server["EMAIL"]
 passwd = cfg.server["PWD"]
 
 def main():
-    try:
-        imapSession = imaplib.IMAP4_SSL(cfg.server["IMAP"])
-        typ, accountDetails = imapSession.login(userName, passwd)
-        if typ != 'OK':
-            print('Not able to sign in!')
-            # raise
 
-        imapSession.select(readonly=False) # so we can mark mails as read
-        # typ, data = imapSession.search(None, 'ALL')
-        typ, data = imapSession.search(None, 'INBOX', '(UNSEEN)')
-        if typ != 'OK':
-            print('Error searching Inbox.')
-            # raise
+    imap = imaplib.IMAP4_SSL(cfg.server["IMAP"])
+    imap.login(userName, passwd)
+    boxList = imap.list()
 
-        # Iterating over all emails
-        for msgId in data[0].split():
-            typ, messageParts = imapSession.fetch(msgId, '(RFC822)')
-            if typ != 'OK':
-                print('Error fetching mail.')
-                # raise
+    # print(boxList)
 
-            emailBody = messageParts[0][1]
-            raw_emailBody = emailBody.decode('utf-8')
-            mail = email.message_from_string(raw_emailBody)
-            for part in mail.walk():
-                if part.get_content_maintype() == 'multipart':
-                    # print part.as_string()
-                    continue
-                if part.get('Content-Disposition') is None:
-                    # print part.as_string()
-                    continue
-                fileName = part.get_filename()
+    imap.select('INBOX')
 
-                # Just save XML files
-                # must starts with SY3_ are valid .xml files to save
-                if (not fileName.startswith('SY3_')):
-                    continue
+    # imap.select(readonly=False) # so we can mark mails as read
+    status, response = imap.search(None, '(UNSEEN)')
+    unread_msg_nums = response[0].split()
 
-                if bool(fileName):
-                    # filePath = os.path.join(detach_dir, 'xml', fileName)
-                    filePath = os.path.join('xml', fileName)
-                    if not os.path.isfile(filePath) :
-                        print(fileName)
-                        fp = open(filePath, 'wb')
-                        fp.write(part.get_payload(decode=True))
-                        fp.close()
-        imapSession.close()
-        imapSession.logout()
-    except :
-        print('Not able to download all attachments.') 
+    print(len(unread_msg_nums))
 
+    # Iterating over all emails
+    for msgId in response[0].split():
+        status, messageParts = imap.fetch(msgId, '(RFC822)')
+
+        if status != 'OK':
+            print('Error fetching mail.')
+
+        emailBody = messageParts[0][1]
+        raw_emailBody = emailBody.decode('utf-8')
+        mail = email.message_from_string(raw_emailBody)
+
+        for part in mail.walk():
+            if part.get_content_maintype() == 'multipart':
+                continue
+            if part.get('Content-Disposition') is None:
+                continue
+
+            fileName = part.get_filename()
+            print(fileName)
+
+            # Just save XML files
+            # must starts with SY3_ are valid .xml files to save
+            if (not fileName.startswith('SY3_')):
+                continue
+
+            if bool(fileName):
+                # filePath = os.path.join(detach_dir, 'xml', fileName)
+                filePath = os.path.join('xml', fileName)
+                if not os.path.isfile(filePath) :
+                    print(fileName)
+                    fp = open(filePath, 'wb')
+                    fp.write(part.get_payload(decode=True))
+                    fp.close()
+    imap.close()
+    imap.logout()
 
 if __name__ == "__main__":
-    main()        
+    main()
