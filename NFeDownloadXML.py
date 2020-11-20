@@ -9,9 +9,9 @@ import sys
 
 import dnlconfig as cfg
 
-detach_dir = '.'
-if 'nfe' not in os.listdir(detach_dir):
-    os.mkdir('nfe')
+# detach_dir = '.'
+# if 'nfe' not in os.listdir(detach_dir):
+#     os.mkdir('nfe')
 
 userName = cfg.server["EMAIL"]
 passwd = cfg.server["PWD"]
@@ -56,7 +56,8 @@ def main():
                     continue
 
                 if bool(fileName):
-                    filePath = os.path.join(detach_dir, 'xml', fileName)
+                    # filePath = os.path.join(detach_dir, 'xml', fileName)
+                    filePath = os.path.join('xml', fileName)
                     if not os.path.isfile(filePath) :
                         print(fileName)
                         fp = open(filePath, 'wb')
