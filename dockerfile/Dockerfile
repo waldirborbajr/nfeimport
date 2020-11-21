@@ -30,7 +30,7 @@ RUN apk add --update --no-cache \
   apk-cron \
   bash \
   && cp /usr/share/zoneinfo/${TZ} /etc/localtime \
-  && echo "${TZ}" > /etc/timezone 
+  && echo "${TZ}" > /etc/timezone
 #   # Cleaning up
 #   && apk del tzdata  \
 #   && rm -rf /usr/share/zoneinfo/Africa \
@@ -44,7 +44,7 @@ RUN apk add --update --no-cache \
 #   && rm -rf /usr/share/zoneinfo/Mexico  \
 #   && rm -rf /usr/share/zoneinfo/Pacific  \
 #   && rm -rf /usr/share/zoneinfo/Chile  \
-#   && rm -rf /usr/share/zoneinfo/Canada \   
+#   && rm -rf /usr/share/zoneinfo/Canada \
 #   && rm -rf /var/cache/apk/* \
 #   && rm -rf /tmp/*
 
@@ -74,7 +74,7 @@ COPY --from=build /etc/localtime /etc/localtime
 COPY --from=build /etc/timezone /etc/timezone
 COPY --from=build /usr/bin/htop /usr/bin/htop
 #
-RUN crontab /nfeimport/cronfile
+# RUN crontab /nfeimport/cronfile
 #
 RUN mkdir processed
 #
