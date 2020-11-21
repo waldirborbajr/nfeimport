@@ -12,7 +12,7 @@ services:
       context: .
       dockerfile: dockerfile/Dockerfile
       # target: base
-    command: watch -n 600 NFeRun.sh
+    command: watch -n 600 ./NFeRun.sh
     restart: always
     volumes:
       - $PWD/xml:/nfeimport/xml:rw
