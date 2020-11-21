@@ -1,5 +1,7 @@
 # Executa a cada 30 min
-*/10 * * * * /opt/venv/bin/python /nfeimport/NFeDownloadXML.py
+#*/10 * * * * /opt/venv/bin/python /nfeimport/NFeDownloadXML.py
 
 # Executa a cada 1h e 15min
-*/23 * * * * /opt/venv/bin/python  /nfeimport/NFeImport.py xml/
+#*/23 * * * * /opt/venv/bin/python  /nfeimport/NFeImport.py xml/
+
+*/10 * * * * /nfeimport/NFeRun.sh
