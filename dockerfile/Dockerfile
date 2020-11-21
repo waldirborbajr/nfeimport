@@ -26,7 +26,6 @@ FROM base AS build
 
 RUN apk add --update --no-cache \
   tzdata \
-  apk-watch \
   htop \
   apk-cron \
   bash \
