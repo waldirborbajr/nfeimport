@@ -4,4 +4,4 @@
 # Executa a cada 1h e 15min
 #*/23 * * * * /opt/venv/bin/python  /nfeimport/NFeImport.py xml/
 
-*/2 * * * * /nfeimport/NFeRun.sh >> /var/log/cron.log 2>&1
+*/7 * * * * /nfeimport/NFeRun.sh >> /var/log/cron.log 2>&1

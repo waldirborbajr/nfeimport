@@ -6,7 +6,11 @@
 cd /nfeimport/
 
 # Download dos XMLs do email
+echo "Download starting..."
 /opt/venv/bin/python /nfeimport/NFeDownloadXML.py
+echo "Download finished."
 
+echo "Import starting..."
 # Carga dos XMLs
 /opt/venv/bin/python /nfeimport/NFeImport.py xml/
+echo "Import finished."
