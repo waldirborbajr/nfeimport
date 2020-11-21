@@ -63,19 +63,45 @@ RUN pip install --no-cache-dir -r requirements.txt
 #
 FROM base AS final
 
+RUN apk add --update --no-cache apk-cron busybox-suid
+
+WORKDIR /nfeimport
+
 # Copy project files
 COPY . .
 # Copy files from build stage
 COPY --from=build /opt/venv /opt/venv
 COPY --from=build /bin/bash /bin/bash
-COPY --from=build /var/spool/cron /var/spool/cron
-COPY --from=build /usr/bin/crontab /usr/bin/crontab
+# COPY --from=build /var/spool/cron /var/spool/cron
+# COPY --from=build /usr/bin/crontab /usr/bin/crontab
 COPY --from=build /etc/localtime /etc/localtime
 COPY --from=build /etc/timezone /etc/timezone
 COPY --from=build /usr/bin/htop /usr/bin/htop
 #
-# RUN crontab /nfeimport/cronfile
+RUN touch /var/log/cron.log
+RUN chmod a+x /nfeimport/NFeRun.sh
+# RUN chmod a+x /nfeimport/entrypoint.sh
+# RUN /nfeimport/entrypoint.sh
+RUN crontab /nfeimport/cronfile
+# RUN crond -f -L /var/log/cron.log
 #
 RUN mkdir processed
 #
-ENTRYPOINT ["python"]
+# ENTRYPOINT ["python"]
+# ENTRYPOINT ["/bin/sh","NFeRun.sh"]
+# CMD ["/bin/sh","NFeRun.sh"]
+# CMD ["/nfeimport/NFeRun.sh"]
+# ENTRYPOINT ["/bin/sh", "-c", "/bin/bash"]
+
+# ENTRYPOINT ["/usr/sbin/crond", "-f"]
+ENTRYPOINT ["crond", "-l", "0", "-d", "0", "-f"]
+
+# ENTRYPOINT ["/bin/bash", "/nfeimport/entrypoint.sh"]
+# CMD ["/bin/bash", "/nfeimport/entrypoint.sh"]
+# CMD ["/bin/bash", "/nfeimport/entrypoint.sh"]
+# CMD ["/bin/bash", "/nfeimport/entrypoint.sh"]
+# CMD ["/bin/bash", "/nfeimport/entrypoint.sh"]
+# CMD ["/bin/sh". "/nfeimport/entrypoint.sh"]
+# CMD ["/bin/bash"]
+
+# CMD ["exec", "crond", "-f"]
