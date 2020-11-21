@@ -26,7 +26,7 @@ def main():
     status, response = imap.search(None, '(UNSEEN)')
     unread_msg_nums = response[0].split()
 
-    print(len(unread_msg_nums))
+    print("   -> {} new e-mails.".format(len(unread_msg_nums)))
 
     # Iterating over all emails
     for msgId in response[0].split():

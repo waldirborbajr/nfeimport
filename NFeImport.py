@@ -9,7 +9,7 @@ MM-DD-YYYY
 08-10-2018 : Correcao para NF com apenas 01 item
 09-05-2018 : Ajuste para importar NFe
 09-14-2018 : Ajuste para importar NFe antes da v4.0
-28-10-2020 : 
+28-10-2020 :
   infAdProd para quando nao tem valor informar 0.00
   adicionado 05 novos campos:
     modBCST
@@ -36,14 +36,14 @@ from NFeSQL import selectNFe, insertNFe
 from NFeXML import extractNFeData, extractNFeDetail
 
 def main():
-  
+
   logging.config.fileConfig('logconf/logging.conf', defaults={'logfilename': 'log/nfeimport.log'})
   logger = logging.getLogger('NFeImport')
-  
+
   if len(sys.argv) - 1 == 0:
     print("Path com os XMLs nao informado.")
     logger.error('Path com os XMLs nao informado.')
-    
+
     '''
     # log something
     logger.debug('debug message')
@@ -58,6 +58,8 @@ def main():
   path = sys.argv[1]
 
   xml_files = [x for x in os.listdir(path) if (x.startswith("SY3_X")) and (x.endswith(".xml"))]
+
+  counter = 0
 
   for xml in xml_files:
 
@@ -87,6 +89,10 @@ def main():
     # shutil.copy(src_file, dst_dir)
     shutil.move(src, dest)
 
+    counter += 1
+
+  print("   -> Imported {} NFe".format(counter))
+
   # Remove all PDFs files
   pdf_files = [x for x in os.listdir(path) if (x.startswith("SY3_X")) and (x.endswith(".pdf"))]
 
@@ -95,7 +101,7 @@ def main():
 
     # Delete all PDF files
     os.remove(documentPDF)
-    
+
 #
 # Main module
 #
