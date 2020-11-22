@@ -87,21 +87,6 @@ RUN crontab /nfeimport/cronfile
 #
 RUN mkdir processed
 #
-# ENTRYPOINT ["python"]
-# ENTRYPOINT ["/bin/sh","NFeRun.sh"]
-# CMD ["/bin/sh","NFeRun.sh"]
-# CMD ["/nfeimport/NFeRun.sh"]
-# ENTRYPOINT ["/bin/sh", "-c", "/bin/bash"]
-
-# ENTRYPOINT ["/usr/sbin/crond", "-f"]
 ENTRYPOINT ["crond", "-l", "0", "-d", "0", "-f"]
-
-# ENTRYPOINT ["/bin/bash", "/nfeimport/entrypoint.sh"]
-# CMD ["/bin/bash", "/nfeimport/entrypoint.sh"]
-# CMD ["/bin/bash", "/nfeimport/entrypoint.sh"]
-# CMD ["/bin/bash", "/nfeimport/entrypoint.sh"]
-# CMD ["/bin/bash", "/nfeimport/entrypoint.sh"]
-# CMD ["/bin/sh". "/nfeimport/entrypoint.sh"]
-# CMD ["/bin/bash"]
-
-# CMD ["exec", "crond", "-f"]
+#
+CMD ["/bin/bash"]
