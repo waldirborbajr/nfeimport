@@ -28,6 +28,7 @@ import os
 from os import urandom
 import shutil
 import sys
+import datetime
 
 import logging
 import logging.config
@@ -91,7 +92,8 @@ def main():
 
     counter += 1
 
-  print("   -> Imported {} NFe".format(counter))
+  now = datetime.datetime.now()
+  print("   {} -> Imported {} NFe".format(str(now),counter))
 
   # Remove all PDFs files
   pdf_files = [x for x in os.listdir(path) if (x.startswith("SY3_X")) and (x.endswith(".pdf"))]

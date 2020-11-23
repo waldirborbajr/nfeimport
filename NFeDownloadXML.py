@@ -6,6 +6,7 @@ import email
 import getpass, imaplib
 import os
 import sys
+import datetime
 
 import dnlconfig as cfg
 
@@ -26,7 +27,8 @@ def main():
     status, response = imap.search(None, '(UNSEEN)')
     unread_msg_nums = response[0].split()
 
-    print("   -> {} new e-mails.".format(len(unread_msg_nums)))
+    now = datetime.datetime.now()
+    print("   {} -> {} new e-mails.".format(str(now),len(unread_msg_nums)))
 
     # Iterating over all emails
     for msgId in response[0].split():
