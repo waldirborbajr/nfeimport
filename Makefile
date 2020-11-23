@@ -29,6 +29,8 @@ export CONTAINER
 
 .PHONY = build
 
+production: stop dang rebuild deploy
+
 build:
 	@echo "\nStarting build...\n"
 	docker-compose -f ${DOCKERFILE} build
@@ -52,6 +54,10 @@ exec:
 deploy:
 	@echo "\nStarting delpoy...\n"
 	docker push ${DOCKER_USER}/${PROJECT_NAME}:${DOCKER_TAG}
+
+dang:
+	@echo "\nStarting dangling removal\n"
+	docker rmi $$(docker images -q -f dangling=true)
 
 develop:
 	docker-compose up --force-recreate --build && docker-compose down --remove-orphans
@@ -77,15 +83,13 @@ logs:
 events:
 	docker-compose -f ${DOCKERFILE} events
 
-run:
-	docker run -t nfeimport
-
 prune:
 	docker system prune -af
 
-dang:
-	docker volume ls -f dangling=true
-	# docker image rm $(docker images --format "{{.ID}}" --filter "dangling=true")
+
+# 	docker container rm $$(docker ps -aq) -f
+# 	docker image rm $$(docker images --format "{{.ID}}" --filter "dangling=true")
+# 	docker volume ls -f dangling=true
 
 # $ docker run -dt <image>
 # $ docker exec -it <container> <command>
