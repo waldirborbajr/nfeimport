@@ -27,7 +27,9 @@ export DOCKER_TAG
 export DOCKER_USER
 export CONTAINER
 
-.PHONY = build
+.PHONY: default
+
+default: help
 
 production: stop dang rebuild deploy
 
@@ -86,6 +88,24 @@ events:
 prune:
 	docker system prune -af
 
+help:
+	@echo ''
+	@echo 'Usage: make [TARGET] [EXTRA_ARGUMENTS]'
+	@echo 'Targets:'
+	@echo '  build    	build docker --image-- for current user: $(HOST_USER)(uid=$(HOST_UID))'
+	@echo '  rebuild  	rebuild docker --image-- for current user: $(HOST_USER)(uid=$(HOST_UID))'
+	@echo '  test     	test docker --container-- for current user: $(HOST_USER)(uid=$(HOST_UID))'
+	@echo '  service   	run as service --container-- for current user: $(HOST_USER)(uid=$(HOST_UID))'
+	@echo '  login   	run as service and login --container-- for current user: $(HOST_USER)(uid=$(HOST_UID))'
+	@echo '  clean    	remove docker --image-- for current user: $(HOST_USER)(uid=$(HOST_UID))'
+	@echo '  prune    	shortcut for docker system prune -af. Cleanup inactive containers and cache.'
+	@echo '  shell      run docker --container-- for current user: $(HOST_USER)(uid=$(HOST_UID))'
+	@echo ''
+	@echo 'Extra arguments:'
+	@echo 'cmd=:	make cmd="whoami"'
+	@echo '# user= and uid= allows to override current user. Might require additional privileges.'
+	@echo 'user=:	make shell user=root (no need to set uid=0)'
+	@echo 'uid=:	make shell user=dummy uid=4000 (defaults to 0 if user= set)'
 
 # 	docker container rm $$(docker ps -aq) -f
 # 	docker image rm $$(docker images --format "{{.ID}}" --filter "dangling=true")
