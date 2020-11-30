@@ -63,7 +63,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 #
 FROM base AS final
 
-RUN apk add --update --no-cache apk-cron busybox-suid tzdata
+RUN apk add --update --no-cache \
+  apk-cron busybox-suid tzdata \
+  && rm -rf /var/cache/apk/*
 
 WORKDIR /nfeimport
 
