@@ -86,7 +86,7 @@ events:
 	docker-compose -f ${DOCKERFILE} events
 
 prune:
-	docker system prune -af
+	docker system prune -a -f --volumes
 
 help:
 	@echo ''
