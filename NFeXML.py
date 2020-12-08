@@ -329,8 +329,9 @@ def extractNFeDetail(xml):
             nfeDetalhe.append(prod.getElementsByTagName("qTrib")[0].childNodes[0].nodeValue)
             nfeDetalhe.append(prod.getElementsByTagName("vUnTrib")[0].childNodes[0].nodeValue)
             nfeDetalhe.append(prod.getElementsByTagName("indTot")[0].childNodes[0].nodeValue)
-            # nfeDetalhe.append(prod.getElementsByTagName("xPed")[0].childNodes[0].nodeValue)
-            osnum = extractOSNumber(prod.getElementsByTagName("xPed")[0].childNodes[0].nodeValue)
+            # 20201207
+            nfeDetalhe.append(prod.getElementsByTagName("xPed")[0].childNodes[0].nodeValue)
+            # osnum = extractOSNumber(prod.getElementsByTagName("xPed")[0].childNodes[0].nodeValue)
             nfeDetalhe.append(osnum)
 
         #
