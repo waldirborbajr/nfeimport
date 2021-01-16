@@ -10,7 +10,7 @@ echo "Download starting..."
 /opt/venv/bin/python /nfeimport/NFeDownloadXML.py
 echo "Download finished."
 
-echo "Import starting..."
 # Carga dos XMLs
+echo "Import starting..."
 /opt/venv/bin/python /nfeimport/NFeImport.py xml/
 echo "Import finished."
