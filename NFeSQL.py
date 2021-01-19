@@ -1,18 +1,20 @@
 import logging
- 
+
 from mysql.connector import MySQLConnection, Error
 from NFeDBConfig import read_db_config
 
 module_logger = logging.getLogger("NFeImport.NFeSQL")
 
 def selectNFe(extracNFeDataResult):
-  
+
   nfeNumber = (extracNFeDataResult[6])
-  
+
   logger = logging.getLogger("NFeImport.NFeSQL.selectNFe")
   logger.info("SELECTING nfe %s", nfeNumber)
-    
-  select_stmt = """ SELECT 1 FROM nfe WHERE ide_nNF = %s LIMIT 1""" 
+
+  select_stmt = """ SELECT 1 FROM nfe WHERE ide_nNF = %s LIMIT 1"""
+
+  logger.info("SELECT %s", select_stmt)
 
   db_config = read_db_config()
   conn_select = MySQLConnection(**db_config)
@@ -21,24 +23,27 @@ def selectNFe(extracNFeDataResult):
   try :
     cursor_select.execute(select_stmt, (nfeNumber,))
   except Exception as ex:
-    logger.error("Exception occured: %s" % ex)
+    logger.error("SELECT Exception occured: %s" % ex)
 
   rowCount = cursor_select.rowcount
-  
+
   if rowCount > 0:
     deleteNFe(nfeNumber)
- 
+
   cursor_select.close()
   conn_select.close()
 
 def deleteNFe(nfeNumber):
-  
+
   logger = logging.getLogger("NFeImport.NFeSQL.deleteNFe")
   logger.info("DELETING nfe %s" , nfeNumber)
 
   delete_nfe_stmt = """ DELETE FROM nfe  WHERE ide_nNF = %s """
 
-  delete_nfedetalhe_stmt = """ DELETE FROM nfedetalhe WHERE nNF = %s """    
+  delete_nfedetalhe_stmt = """ DELETE FROM nfedetalhe WHERE nNF = %s """
+
+  logger.info("DELETE nfe %s" , delete_nfe_stmt)
+  logger.info("DELETE nfedetalhe %s" , delete_nfedetalhe_stmt)
 
   db_config = read_db_config()
   conn_delete = MySQLConnection(**db_config)
@@ -51,12 +56,12 @@ def deleteNFe(nfeNumber):
     conn_delete.commit()
 
   except Exception as ex:
-    logger.error("Exception occured: %s" % ex)
+    logger.error("DELETE Exception occured: %s" % ex)
 
   cursor_delete.close()
   conn_delete.close()
 
-  
+
 def insertNFe(extracNFeDataResult, extracNFeDetailResult):
 
   logger = logging.getLogger("NFeImport.NFeSQL.insertNFe")
@@ -77,8 +82,11 @@ def insertNFe(extracNFeDataResult, extracNFeDetailResult):
           %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
           %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
 
+  logger.info("INSERT  nfe %s" , queryInsert)
+  logger.info("INSERT  nfe %s" , extracNFeDataResult)
+
   try:
-    
+
       db_config = read_db_config()
       conn = MySQLConnection(**db_config)
 
@@ -97,17 +105,19 @@ def insertNFe(extracNFeDataResult, extracNFeDetailResult):
 
           for detail in extracNFeDetailResult:
               queryInsert = None
-              queryInsert = """INSERT INTO nfedetalhe (  
-                nNF, det_cProd, det_cEAN, det_xProd, det_NCM, det_CEST, det_CFOP, det_uCom, det_qCom, det_vUnCom, 
-                det_vProd, det_cEANTrib, det_uTrib, det_qTrib, det_vUnTrib, det_indTot, det_xPed, det_ICMS_orig, 
+              queryInsert = """INSERT INTO nfedetalhe (
+                nNF, det_cProd, det_cEAN, det_xProd, det_NCM, det_CEST, det_CFOP, det_uCom, det_qCom, det_vUnCom,
+                det_vProd, det_cEANTrib, det_uTrib, det_qTrib, det_vUnTrib, det_indTot, det_xPed, det_ICMS_orig,
                 det_ICMS_CST, det_ICMS_modBC, det_ICMS_vBC, det_ICMS_pICMS, det_ICMS_vICMS, det_ICMS_modBCST, det_ICMS_pMVAST,   det_ICMS_vBCST, det_ICMS_pICMSST, det_ICMS_vICMSST,
-                det_IPI_qSelo, det_IPI_cEnq, 
-                det_IPI_CST, det_IPI_vBC, det_IPI_pIPI, det_IPI_vIPI, det_PIS_CST, det_PIS_vBC, det_PIS_pPIS, det_PIS_vPIS, 
+                det_IPI_qSelo, det_IPI_cEnq,
+                det_IPI_CST, det_IPI_vBC, det_IPI_pIPI, det_IPI_vIPI, det_PIS_CST, det_PIS_vBC, det_PIS_pPIS, det_PIS_vPIS,
                 det_COFINS_CST, det_COFINS_vBC, det_COFINS_pCOFINS, det_COFINS_vCOFINS, det_infAdProd )
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
                 %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
 
               logger.info("Inserting nfedetalhe")
+              logger.info("INSERT nfedetalhe  %s" , queryInsert)
+              logger.info("INSERT nfedetalhe  %s" , detail)
 
               cursor.execute(queryInsert, (detail))
               conn.commit()
@@ -119,7 +129,7 @@ def insertNFe(extracNFeDataResult, extracNFeDetailResult):
           logger.error("last insert id not found")
 
   except Error as error:
-      print(error)
+      logger.error("INSERT  Exception occured: %s" % error)
 
   finally:
       cursor.close()
