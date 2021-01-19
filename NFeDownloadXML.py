@@ -52,8 +52,8 @@ def main():
 
             # Just save XML files
             # must starts with SY3_ are valid .xml files to save
-            if (not fileName.startswith('SY3_')):
-                continue
+            # if (not fileName.startswith('SY3_')):
+            #     continue
 
             if bool(fileName):
                 # filePath = os.path.join(detach_dir, 'xml', fileName)
