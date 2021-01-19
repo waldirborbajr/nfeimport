@@ -58,7 +58,8 @@ def main():
 
   path = sys.argv[1]
 
-  xml_files = [x for x in os.listdir(path) if (x.startswith("SY3_X")) and (x.endswith(".xml"))]
+  # xml_files = [x for x in os.listdir(path) if (x.startswith("SY3_X")) and (x.endswith(".xml"))]
+  xml_files = [x for x in os.listdir(path) if (x.endswith(".xml"))]
 
   counter = 0
 
@@ -96,7 +97,8 @@ def main():
   print("   {} -> Imported {} NFe".format(str(now),counter))
 
   # Remove all PDFs files
-  pdf_files = [x for x in os.listdir(path) if (x.startswith("SY3_X")) and (x.endswith(".pdf"))]
+  # pdf_files = [x for x in os.listdir(path) if (x.startswith("SY3_X")) and (x.endswith(".pdf"))]
+  pdf_files = [x for x in os.listdir(path) if (x.endswith(".pdf"))]
 
   for pdf in pdf_files:
     documentPDF = path+pdf
