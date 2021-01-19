@@ -14,7 +14,7 @@ def selectNFe(extracNFeDataResult):
 
   select_stmt = """ SELECT 1 FROM nfe WHERE ide_nNF = %s LIMIT 1"""
 
-  logger.info("SELECT %s", select_stmt)
+  logger.info("=> %s", select_stmt)
 
   db_config = read_db_config()
   conn_select = MySQLConnection(**db_config)
@@ -42,8 +42,8 @@ def deleteNFe(nfeNumber):
 
   delete_nfedetalhe_stmt = """ DELETE FROM nfedetalhe WHERE nNF = %s """
 
-  logger.info("DELETE nfe %s" , delete_nfe_stmt)
-  logger.info("DELETE nfedetalhe %s" , delete_nfedetalhe_stmt)
+  logger.info("=> %s" , delete_nfe_stmt)
+  logger.info("=> %s" , delete_nfedetalhe_stmt)
 
   db_config = read_db_config()
   conn_delete = MySQLConnection(**db_config)
@@ -82,9 +82,6 @@ def insertNFe(extracNFeDataResult, extracNFeDetailResult):
           %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
           %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
 
-  logger.info("INSERT  nfe %s" , queryInsert)
-  logger.info("INSERT  nfe %s" , extracNFeDataResult)
-
   try:
 
       db_config = read_db_config()
@@ -92,7 +89,9 @@ def insertNFe(extracNFeDataResult, extracNFeDetailResult):
 
       cursor = conn.cursor()
 
-      logger.info("INSERTING nfe")
+      logger.info("Inserting nfe")
+      logger.info("=> %s" , queryInsert)
+      logger.info("==> %s" , extracNFeDataResult)
 
       cursor.execute(queryInsert, (extracNFeDataResult))
       conn.commit()
@@ -116,8 +115,8 @@ def insertNFe(extracNFeDataResult, extracNFeDetailResult):
                 %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
 
               logger.info("Inserting nfedetalhe")
-              logger.info("INSERT nfedetalhe  %s" , queryInsert)
-              logger.info("INSERT nfedetalhe  %s" , detail)
+              logger.info("=> %s" , queryInsert)
+              logger.info("==> %s" , detail)
 
               cursor.execute(queryInsert, (detail))
               conn.commit()
