@@ -1,4 +1,4 @@
-## NFeImport 4.0.1
+## NFeImport 4.0.1/2020
 
 #### Docker
 
@@ -30,8 +30,7 @@ docker exec -it ct_python /bin/bash
 docker-compose logs -f -t
 ```
 
-
-## WARNING 
+## WARNING
 
 #### BEWARE
 
@@ -56,12 +55,12 @@ docker volume prune
 ### From Master to Main
 
 ```bash
-# Step 1 
+# Step 1
 # create main branch locally, taking the history from master
 git branch -m master main
 
-# Step 2 
-# push the new local main branch to the remote repo (GitHub) 
+# Step 2
+# push the new local main branch to the remote repo (GitHub)
 git push -u origin main
 
 # Step 3
@@ -82,3 +81,4 @@ git branch -a
 ```
 
 ref.: https://stevenmortimer.com/5-steps-to-change-github-default-branch-from-master-to-main/
+
