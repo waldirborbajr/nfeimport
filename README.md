@@ -1,3 +1,11 @@
+# Este projeto foi arquivado, para uma nova versao melhorada, acessar o novo repositório.
+
+## Este projeto migrou para - https://gitlab.com/wborbajr/nfeloader
+
+### Se voce gostou ou esta utilizando, me ajude a melhorar cada vez mais. https://www.buymeacoffee.com/wborbajr
+
+## Obrigado
+
 ## NFeImport 4.0.1/2020
 
 #### Docker
